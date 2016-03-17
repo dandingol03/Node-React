@@ -1,4 +1,9 @@
-
+var config = require('../config');
+//the other functions or you could put this at the top
+exports.templateRoutes = function templateRoutes(req, res, next){
+    res.locals.routes = config.routes;
+    next();
+};
 
 module.exports.authenticated=function authenticated(req,res,next) {
 
@@ -36,10 +41,4 @@ module.exports.auth=function auth(username,password,session) {
         session.user = {username: username};
     }
     return isAuth;
-};
-
-
-module.exports.logOut=function logOut(session) {
-    session.isAuthenticated=false;
-    delete session.user;
 };

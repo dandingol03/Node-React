@@ -6,7 +6,7 @@ module.exports.index=index;
 module.exports.login=login;
 module.exports.loginProcess=loginProcess;
 module.exports.chat=chat;
-
+module.exports.logOut=logOut;
 
 var util = require('../middleware/utilities');
 
@@ -21,7 +21,8 @@ function index(req,res) {
 function login(req,res) {
     var csrfToken=req.csrfToken();
     console.log("csrfToken=" + csrfToken);
-    res.render("login",{layout:'layout',title:'whatever',csrfToken: csrfToken,req:req});
+    res.render("login",{title:'whatever',csrfToken: csrfToken,
+        message : req.flash('error')});
 
 }
 function loginProcess(req,res) {
@@ -31,6 +32,7 @@ function loginProcess(req,res) {
         res.redirect('/chat');
     }
     else{
+        req.flash('error', 'Wrong Username or Password');
         res.redirect('/login');
     }
 

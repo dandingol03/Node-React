@@ -17,6 +17,7 @@ var session = require('express-session');
 var util = require('./middleware/utilities');
 var csrf = require("csurf");
 var csrfProtection = csrf({ cookie: true });
+var flash = require('connect-flash');
 
 
 
@@ -77,7 +78,7 @@ app.use(session(
 ));
 
 app.use(util.authenticated);
-
+app.use(flash());
 /**
  * 1.get和use模快印入时，不要在模快名后加()
  * 2.get(),this method only match data transfered by get methods,
@@ -88,7 +89,7 @@ app.get("/", routes.index);
 app.post("/authentic.do",csrfProtection,routes.loginProcess);
 app.get("/login", routes.login);
 app.get('/chat',[util.requireAuthentication],routes.chat);
-appp.get('/logout', routes.logOut);
+app.get('/logout', routes.logOut);
 app.use(errorHandlers.notfound);
 app.listen(3000);
 console.log("app server running on port 3000");

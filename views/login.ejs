@@ -4,6 +4,9 @@
             <div class="col-sm-12" style="margin-bottom:20px">
                 <form method="post" action="authentic.do">
                     <!--this field is for csrf-->
+                    <% if (message.length > 0) { %>
+                    <div class="alert alert-danger"><%= message %></div>
+                    <% } %>
                     <input type="hidden" name="_csrf" value="<%=csrfToken%>"/>
                     <input type="hidden" name="param" vlaue="<%=req%>"/>
                     <div class="form-group">
