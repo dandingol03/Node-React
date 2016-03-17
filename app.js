@@ -14,7 +14,7 @@ var log = require('./middleware/log');
 var cookieParser=require('cookie-parser');
 var bodyParser=require('body-parser');
 var session = require('express-session');
-
+var util = require('./middleware/utilities');
 var csrf = require("csurf");
 var csrfProtection = csrf({ cookie: true });
 
@@ -52,6 +52,8 @@ app.use(cookieParser());
 app.use(bodyParser());
 
 app.use(csrf({ cookie: true }));
+
+
 /**
  * 模快csrf引入，防止跨域攻击
  */
@@ -74,6 +76,7 @@ app.use(session(
     }
 ));
 
+app.use(util.authenticated);
 
 /**
  * 1.get和use模快印入时，不要在模快名后加()
@@ -84,7 +87,8 @@ app.get("/", routes.index);
 
 app.post("/authentic.do",csrfProtection,routes.loginProcess);
 app.get("/login", routes.login);
-app.get('/chat',routes.chat);
+app.get('/chat',[util.requireAuthentication],routes.chat);
+appp.get('/logout', routes.logOut);
 app.use(errorHandlers.notfound);
 app.listen(3000);
 console.log("app server running on port 3000");

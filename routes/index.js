@@ -8,6 +8,7 @@ module.exports.loginProcess=loginProcess;
 module.exports.chat=chat;
 
 
+var util = require('../middleware/utilities');
 
 function index(req,res) {
     var cookies=req.cookies;
@@ -24,18 +25,22 @@ function login(req,res) {
 
 }
 function loginProcess(req,res) {
-
-    console.log("we have pass the csrf authentication");
-    console.log("username=" + req.body.username);
-    console.log("password=" + req.body.password);
-    if(req.body.username=="dandingol03"&&req.body.password=="kobebra03") {
-        res.render('authentic',{layout:'layout',title:'whatever'});
+    var isAuth = util.auth(req.body.username, req.body.password,
+        req.session);
+    if(isAuth) {
+        res.redirect('/chat');
     }
-    else
-        res.send("authentic failed");
+    else{
+        res.redirect('/login');
+    }
 
 }
-function chat(req,res) {
-    res.send("chat");
-}
 
+function chat(req, res){
+    res.render('chat', {title: 'Chat'});
+};
+
+function logOut(req,res) {
+    util.logOut(req.session);
+    res.redirect('/');
+}
