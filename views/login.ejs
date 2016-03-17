@@ -1,0 +1,40 @@
+<div class="row">
+    <div class="col-sm-8 col-sm-offset-2">
+        <div class="row">
+            <div class="col-sm-12" style="margin-bottom:20px">
+                <form method="post" action="authentic.do">
+                    <!--this field is for csrf-->
+                    <input type="hidden" name="_csrf" value="<%=csrfToken%>"/>
+                    <input type="hidden" name="param" vlaue="<%=req%>"/>
+                    <div class="form-group">
+                        <label for="username">username</label>
+                        <input type="text" class="form-control" id="username"
+                               placeholder="username" name="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">password</label>
+                        <input type="text" class="form-control" id="password"
+                               placeholder="password" name="password">
+                    </div>
+                    <input type="submit" >
+                        login
+                    </input>
+                </form>
+            </div>
+            <div class="row top-margin">
+                <div class="col-sm-6" style="padding-left:30px">
+                    <button class="btn btn-block facebook">
+                        <i class="fa fa-facebook"></i>
+                        Facebook
+                    </button>
+                </div>
+                <div class="col-sm-6" style="padding-right:30px">
+                    <button class="btn btn-block google">
+                        <i class="fa fa-google"></i>
+                        google
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
